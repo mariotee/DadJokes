@@ -50,7 +50,7 @@ export default class App extends React.Component {
       });
   
       const jokeText = String(res.data.joke);
-      const splitText = jokeText.toLowerCase().replace(/[.,!;:{}()?&-"]/g,'').split(' ');
+      const splitText = jokeText.toLowerCase().replace(/[-.,!;:{}()?&"]/g,'').split(' ');
       let search = '';
       
       for (const word of splitText) {
