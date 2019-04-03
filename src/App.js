@@ -67,7 +67,7 @@ export default class App extends React.Component {
       else {
         imgRes = {
           urls: {
-            raw: 'https://images.unsplash.com/photo-1504151932400-72d4384f04b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9'
+            regular: 'https://images.unsplash.com/photo-1504151932400-72d4384f04b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9'
           },
           links: {
             html: 'https://unsplash.com/photos/EQlTyDZRx7U'
@@ -134,7 +134,7 @@ export default class App extends React.Component {
     const links = (pic.user && pic.user.links) || "";
     const unsplashLink = links.html || "";
     const urls = pic.urls || "";
-    const imgRef = urls.raw || "";
+    const imgRef = urls.regular || "";
     const user = pic.user || "";    
     const artistName = user.name || "";
     const twitterUsername = user.twitter_username || "";
