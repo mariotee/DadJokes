@@ -129,8 +129,8 @@ export default class App extends React.Component {
 
     const pic = pics[0] || {};
     const joke = jokes[0] || "";
-    const bgndColor = pic.color || '#ffffff';
-    const textColor = invert(bgndColor);
+    const textColor = pic.color || '#ffffff';
+    const bgndColor = invert(textColor);
     const links = (pic.user && pic.user.links) || "";
     const unsplashLink = links.html || "";
     const urls = pic.urls || "";
