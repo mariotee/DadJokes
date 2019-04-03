@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/DadJokes/static/js/runtime~main.391f50b8.js"
   },
   {
-    "revision": "7d15e4003d9dd7c2dc95",
-    "url": "/DadJokes/static/js/main.7d15e400.chunk.js"
+    "revision": "9fb4f6e5cfe7d775665a",
+    "url": "/DadJokes/static/js/main.9fb4f6e5.chunk.js"
   },
   {
     "revision": "32c16021b3bfcf0fc19f",
     "url": "/DadJokes/static/js/1.32c16021.chunk.js"
   },
   {
-    "revision": "7d15e4003d9dd7c2dc95",
+    "revision": "9fb4f6e5cfe7d775665a",
     "url": "/DadJokes/static/css/main.86fa037d.chunk.css"
   },
   {
-    "revision": "cab31272b076343f7a325c959b3d7186",
+    "revision": "1271ec4967ee888588f01d4ba92d676a",
     "url": "/DadJokes/index.html"
   }
 ];
