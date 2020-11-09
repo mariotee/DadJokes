@@ -4,10 +4,10 @@
   "homepage": "https://mariotee.github.io/DadJokes",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "invert-color": "^2.0.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "2.1.2",
     "unsplash-js": "^4.8.0"
   },

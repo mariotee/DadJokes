@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import unsplash from 'unsplash-js';
-import invert from 'invert-color';
 
 import dictionary from 'dictionary.js';
 import {API_KEY} from 'secrets.js'
@@ -18,31 +17,25 @@ const imageapi = new unsplash({
   callbackUrl: '',
 });
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+export default () => {
+  const [jokes, setJokes] = React.useState([]);
+  const [pics, setPics] = React.useState([]);
+  const [hoverRefresh, setHoverRefresh] = React.useState(false);
+  const [intervalRef, setIntervalRef] = React.useState(null);  
 
-    this.state = {
-      jokes: [],
-      pics: [],
-      hoverRefreshButton: false,
-    }
-
-    this.intervalRef = null;
-  }
-
-  componentDidMount() {
-    this.toggleInterval();
-    this.fetchData();
+  React.useEffect(() => {
+    toggleInterval();
+    fetchData();
+    
     window.onkeydown = (e) => {
       if(e.key === 'ArrowRight') {
-        this.clickNextJoke();
+        clickNextJoke();
       }
     };
-  }
+  })
 
-  fetchData = async () => {
-    if (this.state.jokes.length < MAX_DATA_COUNT) {
+  const fetchData = async () => {
+    if (jokes.length < MAX_DATA_COUNT) {
       let res = await axios.get('https://icanhazdadjoke.com', {
         headers: {
           'Accept': 'application/json'
@@ -81,96 +74,115 @@ export default class App extends React.Component {
         }
       }
           
-      this.setState((prevState) => {
-        const newJokeData = prevState.jokes;
+      setJokes((prev) => {        
+        const newJokeData = [...prev];
         newJokeData.push(jokeText);
-        const newPicsData = prevState.pics;
+
+        return newJokeData;
+      });
+
+      setPics((prev) => {
+        const newPicsData = [...prev];
         newPicsData.push(imgRes);
-        return ({
-          jokes: newJokeData,
-          pics: newPicsData,
-        });
+
+        return newPicsData;
       });
     }
   }
 
-  toggleInterval = () => {
-    if(this.intervalRef === null) {
-      this.intervalRef = window.setInterval(this.fetchData, INTERVAL_MS);
+  const toggleInterval = () => {
+    if(intervalRef === null) {
+      setIntervalRef(window.setInterval(fetchData, INTERVAL_MS));
     }
     else {
-      window.clearInterval(this.intervalRef);
+      window.clearInterval(intervalRef);
     }
   }  
 
-  toggleHover = () => {
-    this.setState((prevState) => {
-      return ({
-        hoverRefreshButton: !prevState.hoverRefreshButton
+  const toggleHover = () => {
+    setHoverRefresh((prev) => !prev);
+  }
+
+  const clickNextJoke = () => {
+      setJokes((prev) => {
+        let newJokesData = [...prev];
+        newJokesData.shift();
+
+        return newJokesData;
       });
-    });
+
+      setPics((prev) => {
+        let newPicsData = [...prev];
+        newPicsData.shift();
+
+        return newPicsData;
+      });
   }
 
-  clickNextJoke = () => {
-    this.setState((prevState) => {
-      let newJokesData = prevState.jokes;
-      newJokesData.shift();
-      let newPicsData = prevState.pics;
-      newPicsData.shift();
-      return ({
-        jokes: newJokesData,
-        pics: newPicsData,
-      })
-    });
+  const getTextColour = (hex) => {
+    var nums = hex.substring(1);
+    var rgb = parseInt(nums, 16);
+    var r = (rgb >> 16) & 0xff;
+    var g = (rgb >> 8) & 0xff;
+    var b = (rgb >> 0) & 0xff;
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+    if (luma < 60) {
+      return "#ffffff";
+    }
+
+    return hex;
   }
 
-  render() {    
-    const {jokes, pics, hoverRefreshButton: hovering} = this.state;
+  const pic = pics[0] || {};
+  const textColor = getTextColour(pic.color || "#ffffff");
+  const bgndColor = "#222222";
+  
+  const user = pic.user || "";    
 
-    const pic = pics[0] || {};
-    const joke = jokes[0] || "";
-    const textColor = pic.color || '#ffffff';
-    const bgndColor = invert(textColor);
-    const links = (pic.user && pic.user.links) || "";
-    const unsplashLink = links.html || "";
-    const urls = pic.urls || "";
-    const imgRef = urls.regular || "";
-    const user = pic.user || "";    
-    const artistName = user.name || "";
-    const twitterUsername = user.twitter_username || "";
-    const instagramUsername = user.instagram_username || "";
-    
-    return <div
-      style={{
-        height: '100%',
-        textAlign: 'center',
-        padding: '128px 32px',
-        backgroundImage: `url(${imgRef})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',      
-      }}
-    >
-      <JokeContent
-        backgroundColor={bgndColor}
-        textColor={textColor}
-        text={joke}
-      />
-      <RefreshJoke
-        backgroundColor={bgndColor}
-        textColor={textColor}
-        hover={hovering}
-        toggleHover={this.toggleHover}
-        onClick={this.clickNextJoke}
-      />
-      <Attribution
-        backgroundColor={bgndColor}
-        textColor={textColor}
-        artistName={artistName}
-        unsplashLink={unsplashLink}
-        twitterUsername={twitterUsername}        
-        instagramUsername={instagramUsername}
-      />
-    </div>
-  }
+  const artistName = user.name || "";
+  const twitterUsername = user.twitter_username || "";
+  const instagramUsername = user.instagram_username || "";
+
+  const links = (user && user.links) || "";
+  const unsplashLink = links.html || "";
+  
+  const urls = pic.urls || "";
+  const imgRef = urls.regular || "";
+  
+  const joke = jokes[0] || "";
+  
+  return <div
+    style={{
+      height: '100%',
+      textAlign: 'center',
+      padding: '128px 32px',
+      backgroundImage: `url(${imgRef})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',      
+    }}
+  >
+    <JokeContent
+      backgroundColor={bgndColor}
+      textColor={textColor}
+      text={joke}
+    />
+    <RefreshJoke
+      backgroundColor={bgndColor}
+      textColor={textColor}
+      hover={hoverRefresh}
+      toggleHover={toggleHover}
+      onClick={clickNextJoke}
+    />
+    <Attribution
+      backgroundColor={bgndColor}
+      textColor={textColor}
+      artistName={artistName}
+      unsplashLink={unsplashLink}
+      twitterUsername={twitterUsername}        
+      instagramUsername={instagramUsername}
+    />
+  </div>
 }
