@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import unsplash from 'unsplash-js';
+import tinycolor from 'tinycolor2'
 
 import dictionary from 'dictionary.js';
 import {API_KEY} from 'secrets.js'
@@ -119,24 +120,8 @@ export default () => {
       });
   }
 
-  const getTextColour = (hex) => {
-    var nums = hex.substring(1);
-    var rgb = parseInt(nums, 16);
-    var r = (rgb >> 16) & 0xff;
-    var g = (rgb >> 8) & 0xff;
-    var b = (rgb >> 0) & 0xff;
-
-    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-
-    if (luma < 60) {
-      return "#ffffff";
-    }
-
-    return hex;
-  }
-
   const pic = pics[0] || {};
-  const textColor = getTextColour(pic.color || "#ffffff");
+  const textColor = pic.color ? tinycolor(pic.color).lighten(55).toString() : "#ffffff";
   const bgndColor = "#222222";
   
   const user = pic.user || "";    

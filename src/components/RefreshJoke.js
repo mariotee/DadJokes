@@ -14,7 +14,7 @@ export default function(props) {
     border: 'none',    
     borderRadius: '8px',
     color: textColor,
-    backgroundColor: props.backgroundColor + '66',
+    backgroundColor: props.backgroundColor + 'cc',
     boxShadow: boxShadow,
   }
 

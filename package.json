@@ -9,6 +9,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-scripts": "2.1.2",
+    "tinycolor2": "^1.4.2",
     "unsplash-js": "^4.8.0"
   },
   "scripts": {
