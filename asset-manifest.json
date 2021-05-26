@@ -1,9 +1,9 @@
 {
-  "main.css": "/DadJokes/static/css/main.fe733b9e.chunk.css",
-  "main.js": "/DadJokes/static/js/main.65968a7c.chunk.js",
-  "static/js/1.cb5b7b93.chunk.js": "/DadJokes/static/js/1.cb5b7b93.chunk.js",
+  "main.css": "/DadJokes/static/css/main.eaa98f03.chunk.css",
+  "main.js": "/DadJokes/static/js/main.cec916be.chunk.js",
+  "static/js/1.9cb07f80.chunk.js": "/DadJokes/static/js/1.9cb07f80.chunk.js",
   "runtime~main.js": "/DadJokes/static/js/runtime~main.391f50b8.js",
   "index.html": "/DadJokes/index.html",
-  "precache-manifest.03beb7e8f0b0d3e17b5f5ceee1fddff1.js": "/DadJokes/precache-manifest.03beb7e8f0b0d3e17b5f5ceee1fddff1.js",
+  "precache-manifest.bbc9c243d3b6565aa64bdb495b276316.js": "/DadJokes/precache-manifest.bbc9c243d3b6565aa64bdb495b276316.js",
   "service-worker.js": "/DadJokes/service-worker.js"
 }
